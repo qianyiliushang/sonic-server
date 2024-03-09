@@ -29,6 +29,7 @@ import org.cloud.sonic.controller.services.AgentsService;
 import org.cloud.sonic.controller.services.ConfListService;
 import org.cloud.sonic.controller.transport.TransportWorker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +45,9 @@ public class ConfListController {
     private ConfListService confListService;
     @Autowired
     private AgentsService agentsService;
+
+    @Value("${sonic.server.ssl.enabled}")
+    private boolean sslEnabled;
 
     @WebAspect
     @Operation(summary = "获取远控超时时间", description = "获取远控超时时间")
@@ -82,5 +86,13 @@ public class ConfListController {
     public RespModel setIdleTimeout(@RequestParam(name = "timeout") int timeout) {
         confListService.save(ConfType.IDEL_DEBUG_TIMEOUT, timeout + "", null);
         return new RespModel<>(RespEnum.HANDLE_OK);
+    }
+
+    @WebAspect
+    @Operation(summary = "获取是否开启SSL连接", description = "获取是否开启SSL连接")
+    @GetMapping("/getSslEnabled")
+    public RespModel getSslEnabled() {
+        return new RespModel<>(RespEnum.SEARCH_OK,
+                sslEnabled);
     }
 }
