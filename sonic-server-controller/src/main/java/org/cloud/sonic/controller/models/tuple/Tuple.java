@@ -7,10 +7,10 @@ import jakarta.websocket.Session;
  *
  * @param browserSessionId 浏览器sessionId
  * @param browserSession    浏览器session
- * @param clientSessionId  代理sessionId
- * @param clientSession    代理session
+ * @param agentSessionId  代理sessionId
+ * @param agentSession    代理session
  */
 
-public record Tuple(String browserSessionId, Session browserSession, String clientSessionId, Session clientSession) {
+public record Tuple(String browserSessionId, Session browserSession, String agentSessionId, Session agentSession) {
 
 }
